@@ -23,7 +23,7 @@ public class BWEncoderDecoder implements Compressor
 
 	public BWEncoderDecoder()
 	{
-		String[] input_names = {"Banana"};
+		String[] input_names = {"banana"};
 		String[] output_names =  {"John", "Mary", "Bob"};
 		Compress(input_names,output_names);
 	}
@@ -44,6 +44,7 @@ public class BWEncoderDecoder implements Compressor
 		lexiArraySort(shuffle_Matrix,str);
 		output_names[0] = SAVEDSTRING;
 		output_names[1] = Integer.toString(SAVEDINDEX);
+		BWdecode(SAVEDSTRING,SAVEDINDEX);
 	}
 
 
@@ -57,13 +58,19 @@ public class BWEncoderDecoder implements Compressor
 				sortedArr[i] += arr[i][j];
 			}
 		}
+
 		Arrays.sort(sortedArr);
+
 		for(int i = 0;i < length;i++) {
 			SAVEDSTRING += sortedArr[i].substring(length-1,length);
 			if (sortedArr[i].equals(str)) {
 				SAVEDINDEX = i;
 			}
 		}
+		System.out.println(Arrays.deepToString(sortedArr));
+
+		System.out.println(SAVEDSTRING);
+
 
 	}
 	public static String stringSorter(String str)
@@ -78,15 +85,20 @@ public class BWEncoderDecoder implements Compressor
 		return new String(tempArray);
 	}
 	public String BWdecode(String str,int index){
+		StringBuilder revString = new StringBuilder();
+
 		int length = str.length();
+		String[] decString = new String[length];
+		Arrays.fill(decString,"");
 		char[][] buildArr = new char[length][length];
 		for(int i = 0;i < length;i++){
 			for(int j = 0;j < length;j++){
-				buildArr[i][length-j-1] = str.charAt(j);
+				decString[j] = str.charAt(j) + decString[j];
 			}
-
+			Arrays.sort(decString);
+			System.out.println(Arrays.deepToString(decString));
 		}
-
+		System.out.println(Arrays.deepToString(decString));
 		return "";
 	}
 
