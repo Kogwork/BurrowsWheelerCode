@@ -3,8 +3,8 @@ package assign2;
 /**
  * Assignment 2
  * Submitted by: 
- * Student 1. 	ID# XXXXXXXXX
- * Student 2. 	ID# XXXXXXXXX
+ * Student 1.Danny Kogel 	ID# 318503257
+ * Student 2.Alex Breger 	ID# 205580087
  */
 
 import base.Compressor;
@@ -15,17 +15,22 @@ import java.util.Collections;
 
 public class BWEncoderDecoder implements Compressor
 {
-	static int SAVEDINDEX = 0;
-	static String SAVEDSTRING = "";
+	static int SAVEDINDEX = 0; //saves the key index
+	static String SAVEDSTRING = ""; //saves the key string
+
 	public static void main(String args[]) {
 		new BWEncoderDecoder();
 	}
 
 	public BWEncoderDecoder()
 	{
-		String[] input_names = {"Project Gutenberg's Frankenstein, by Mary Wollstonecraft (Godwin) Shelley"};
-		String[] output_names =  {""};
+		String[] input_names = {"Project Gutenberg's Frankenstein,I by Mary Wollstonecraft (Godwin) Shelley",""}; //input names as instructed
+		String[] output_names =  {"",""}; //output names as instructed
 		Compress(input_names,output_names);
+		Decompress(output_names,input_names); // run for decompression
+		System.out.println("[Key string]: "+ output_names[0]);
+		System.out.println("[Key index]: " + output_names[1]);
+		System.out.println("[original String]: " + input_names[0]);
 	}
 
 	@Override
@@ -34,42 +39,33 @@ public class BWEncoderDecoder implements Compressor
 		String str = input_names[0];
 		int length = str.length();
 
+		//we'll build a char 2d array to implement all permutations of rotating chars
 		char[][] shuffle_Matrix = new char[length][length];
 		for(int i = 0;i < length;i++){
 			for(int j = 0;j < length;j++){
 				shuffle_Matrix[i][j] = str.charAt((j+i)%length);
 			}
 		}
-		System.out.println(Arrays.deepToString(shuffle_Matrix));
-		lexiArraySort(shuffle_Matrix,str);
-		output_names[0] = SAVEDSTRING;
-		output_names[1] = Integer.toString(SAVEDINDEX);
-		Decompress(output_names,output_names);
-		System.out.println(SAVEDSTRING);
-		System.out.println("INDEX" + SAVEDINDEX);
-
-	}
-
-
-	public void lexiArraySort(char[][] arr,String str){
-		int length = arr.length;
-
+		//transfer the char array into string array so we could use the Array.sort function
+		//to sort it lexicographicly.
 		String[] sortedArr = new String[length];
 		for(int i = 0;i<length;i++){
 			sortedArr[i] = "";
 			for(int j = 0;j<length;j++) {
-				sortedArr[i] += arr[i][j];
+				sortedArr[i] += shuffle_Matrix[i][j];
 			}
 		}
 
 		Arrays.sort(sortedArr);
-
+		//saves the last char in each string to create the key string
 		for(int i = 0;i < length;i++) {
 			SAVEDSTRING += sortedArr[i].substring(length-1,length);
-			if (sortedArr[i].equals(str)) {
+			if (sortedArr[i].equals(str)) { //if string matches input string, save the index
 				SAVEDINDEX = i;
 			}
 		}
+		output_names[0] = SAVEDSTRING; //we'll remember it in a global var
+		output_names[1] = Integer.toString(SAVEDINDEX);
 
 
 	}
@@ -80,8 +76,11 @@ public class BWEncoderDecoder implements Compressor
 	{
 		String str = input_names[0];
 		String index = input_names[1];
-
 		int length = str.length();
+
+		//create string array and input the key string
+		//from the end of the string and sort each iteration
+		//until we'll have to original char matrix
 		String[] decString = new String[length];
 		Arrays.fill(decString,"");
 		for(int i = 0;i < length;i++){
@@ -90,12 +89,10 @@ public class BWEncoderDecoder implements Compressor
 			}
 			Arrays.sort(decString);
 		}
-		System.out.println(SAVEDSTRING);
-
-		System.out.println(decString[Integer.parseInt(index)]);
 
 		output_names[0] = decString[Integer.parseInt(index)];
 
+		//the string at the key index will be the original string
 	}
 
 	@Override
