@@ -23,30 +23,8 @@ public class BWEncoderDecoder implements Compressor
 
 	public BWEncoderDecoder()
 	{
-		String[] input_names = {"Project Gutenberg's Frankenstein, by Mary Wollstonecraft (Godwin) Shelley\n" +
-				"\n" +
-				"This eBook is for the use of anyone anywhere at no cost and with\n" +
-				"almost no restrictions whatsoever.  You may copy it, give it away or\n" +
-				"re-use it under the terms of the Project Gutenberg License included\n" +
-				"with this eBook or online at www.gutenberg.net\n" +
-				"\n" +
-				"\n" +
-				"Title: Frankenstein\n" +
-				"       or The Modern Prometheus\n" +
-				"\n" +
-				"Author: Mary Wollstonecraft (Godwin) Shelley\n" +
-				"\n" +
-				"Release Date: June 17, 2008 [EBook #84]\n" +
-				"Last updated: January 13, 2018\n" +
-				"\n" +
-				"Language: English\n" +
-				"\n" +
-				"Character set encoding: UTF-8\n" +
-				"\n" +
-				"*** START OF THIS PROJECT GUTENBERG EBOOK FRANKENSTEIN ***\n" +
-
-				"Archangel, 28th March, 17—.\n"};
-		String[] output_names =  {"John", "Mary", "Bob"};
+		String[] input_names = {"Project Gutenberg's Frankenstein, by Mary Wollstonecraft (Godwin) Shelley"};
+		String[] output_names =  {""};
 		Compress(input_names,output_names);
 	}
 
@@ -92,9 +70,6 @@ public class BWEncoderDecoder implements Compressor
 				SAVEDINDEX = i;
 			}
 		}
-		System.out.println(Arrays.deepToString(sortedArr));
-
-		System.out.println(SAVEDSTRING);
 
 
 	}
@@ -114,9 +89,10 @@ public class BWEncoderDecoder implements Compressor
 				decString[j] = str.charAt(j) + decString[j];
 			}
 			Arrays.sort(decString);
-			System.out.println(Arrays.deepToString(decString));
 		}
-		System.out.println(Arrays.deepToString(decString));
+		System.out.println(SAVEDSTRING);
+
+		System.out.println(decString[Integer.parseInt(index)]);
 
 		output_names[0] = decString[Integer.parseInt(index)];
 
