@@ -23,7 +23,29 @@ public class BWEncoderDecoder implements Compressor
 
 	public BWEncoderDecoder()
 	{
-		String[] input_names = {"banana"};
+		String[] input_names = {"Project Gutenberg's Frankenstein, by Mary Wollstonecraft (Godwin) Shelley\n" +
+				"\n" +
+				"This eBook is for the use of anyone anywhere at no cost and with\n" +
+				"almost no restrictions whatsoever.  You may copy it, give it away or\n" +
+				"re-use it under the terms of the Project Gutenberg License included\n" +
+				"with this eBook or online at www.gutenberg.net\n" +
+				"\n" +
+				"\n" +
+				"Title: Frankenstein\n" +
+				"       or The Modern Prometheus\n" +
+				"\n" +
+				"Author: Mary Wollstonecraft (Godwin) Shelley\n" +
+				"\n" +
+				"Release Date: June 17, 2008 [EBook #84]\n" +
+				"Last updated: January 13, 2018\n" +
+				"\n" +
+				"Language: English\n" +
+				"\n" +
+				"Character set encoding: UTF-8\n" +
+				"\n" +
+				"*** START OF THIS PROJECT GUTENBERG EBOOK FRANKENSTEIN ***\n" +
+
+				"Archangel, 28th March, 17—.\n"};
 		String[] output_names =  {"John", "Mary", "Bob"};
 		Compress(input_names,output_names);
 	}
@@ -44,7 +66,10 @@ public class BWEncoderDecoder implements Compressor
 		lexiArraySort(shuffle_Matrix,str);
 		output_names[0] = SAVEDSTRING;
 		output_names[1] = Integer.toString(SAVEDINDEX);
-		BWdecode(SAVEDSTRING,SAVEDINDEX);
+		Decompress(output_names,output_names);
+		System.out.println(SAVEDSTRING);
+		System.out.println("INDEX" + SAVEDINDEX);
+
 	}
 
 
@@ -73,24 +98,17 @@ public class BWEncoderDecoder implements Compressor
 
 
 	}
-	public static String stringSorter(String str)
+
+
+	@Override
+	public void Decompress(String[] input_names, String[] output_names)
 	{
-		// convert input string to char array
-		char tempArray[] = str.toCharArray();
-
-		// sort tempArray
-		Arrays.sort(tempArray);
-
-		// return new sorted string
-		return new String(tempArray);
-	}
-	public String BWdecode(String str,int index){
-		StringBuilder revString = new StringBuilder();
+		String str = input_names[0];
+		String index = input_names[1];
 
 		int length = str.length();
 		String[] decString = new String[length];
 		Arrays.fill(decString,"");
-		char[][] buildArr = new char[length][length];
 		for(int i = 0;i < length;i++){
 			for(int j = 0;j < length;j++){
 				decString[j] = str.charAt(j) + decString[j];
@@ -99,13 +117,8 @@ public class BWEncoderDecoder implements Compressor
 			System.out.println(Arrays.deepToString(decString));
 		}
 		System.out.println(Arrays.deepToString(decString));
-		return "";
-	}
 
-	@Override
-	public void Decompress(String[] input_names, String[] output_names)
-	{
-		// TODO Auto-generated method stub
+		output_names[0] = decString[Integer.parseInt(index)];
 
 	}
 
