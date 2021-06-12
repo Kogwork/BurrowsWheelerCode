@@ -24,13 +24,19 @@ public class BWEncoderDecoder implements Compressor
 
 	public BWEncoderDecoder()
 	{
-		String[] input_names = {"Project Gutenberg's Frankenstein,I by Mary Wollstonecraft (Godwin) Shelley",""}; //input names as instructed
+		String[] input_names = {"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra vitae ligula sit amet tincidunt. Nam pretium, purus at iaculis facilisis, dui justo ornare velit, vel placerat neque quam quis magna. Donec vestibulum maximus sollicitudin. Nulla lacus turpis, facilisis id risus eu, facilisis egestas risus. Cras rutrum quam in tempus interdum. Nulla vehicula nisi odio, in varius nulla laoreet ut. Nam iaculis accumsan tortor ut sodales. Praesent convallis, arcu sit amet elementum egestas, ipsum est mollis odio, nec euismod leo urna ac orci. Vivamus pellentesque aliquet egestas.\n" +
+				"\n" +
+				"Cras vitae rhoncus lorem. Integer nisl nibh, ullamcorper et ante pretium, euismod laoreet sapien. Pellentesque laoreet, arcu sit amet eleifend pharetra, nulla tortor congue odio, id malesuada tortor enim non urna. Proin rutrum eget neque pretium sollicitudin. Nunc rutrum tortor mi, vestibulum mattis felis venenatis eu. Integer malesuada condimentum est volutpat vestibulum. Morbi vel convallis eros. Quisque suscipit imperdiet sapien sit amet sagittis. Etiam ut elementum urna, non ullamcorper nibh. Suspendisse pellentesque, ante a gravida elementum, lacus lacus maximus augue, in faucibus ipsum leo non tellus. Ut ut lobortis turpis, ac scelerisque nisl.\n" +
+				"\n" +
+				"Pellentesque efficitur turpis risus, at pretium odio auctor eu. Aenean eu arcu eget sem condimentum convallis. Fusce ex eros, tempor sed enim sit amet, rhoncus ullamcorper odio. Vivamus cursus congue erat, at viverra nunc hendrerit a. Ut scelerisque quis sem a blandit. Proin placerat aliquet orci sed gravida. Cras sagittis euismod elit, sit amet hendrerit tellus faucibus et. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nullam ut sem felis. Sed pellentesque blandit nunc, quis sodales metus dapibus elementum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n" +
+				"\n" +
+				"Quisque ornare velit eu condimentum sollicitudin. Quisque ut massa et metus tincidunt dignissim. Vivamus quis lectus dictum, ornare diam eu, eleifend ex. Phasellus eget urna felis. Nulla tristique massa risus, sit amet molestie metus suscipit quis. Aliquam id ante justo. Morbi vulputate nunc sed velit iaculis tincidunt. Cras sed erat ac nunc venenatis ultrices.",""}; //input names as instructed
 		String[] output_names =  {"",""}; //output names as instructed
 		Compress(input_names,output_names);
 		Decompress(output_names,input_names); // run for decompression
-		System.out.println("[Key string]: "+ output_names[0]);
-		System.out.println("[Key index]: " + output_names[1]);
-		System.out.println("[original String]: " + input_names[0]);
+		System.out.println("[Key string]: "+ input_names[0]);
+		System.out.println("[Key index]: " + input_names[1]);
+		System.out.println("[original String]: " + output_names[0]);
 	}
 
 	@Override
@@ -66,8 +72,6 @@ public class BWEncoderDecoder implements Compressor
 		}
 		output_names[0] = SAVEDSTRING; //we'll remember it in a global var
 		output_names[1] = Integer.toString(SAVEDINDEX);
-
-
 	}
 
 
@@ -89,9 +93,9 @@ public class BWEncoderDecoder implements Compressor
 			}
 			Arrays.sort(decString);
 		}
-
-		output_names[0] = decString[Integer.parseInt(index)];
-
+		output_names[0] = input_names[0];
+		output_names[1] = input_names[1];
+		input_names[0] = decString[Integer.parseInt(index)];
 		//the string at the key index will be the original string
 	}
 
